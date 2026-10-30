@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClientHub | Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app">
+
+    
+    <aside class="sidebar">
+      <div class="logo">
+        <span class="logo-icon">C</span>
+        <h2>Client<span>Hub</span></h2>
+      </div>
+
+      <p class="menu-label">MENU PRINCIPAL</p>
+
+      <nav class="menu">
+        <a href="#" class="menu-item active" data-page="dashboard">
+          <span>▦</span> Dashboard
+        </a>
+        <a href="#" class="menu-item" data-page="clientes">
+          <span>♙</span> Clientes
+        </a>
+        <a href="#" class="menu-item" data-page="relatorios">
+          <span>▥</span> Relatórios
+        </a>
+        <a href="#" class="menu-item" data-page="configuracoes">
+          <span>⚙</span> Configurações
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="avatar">AD</div>
+        <div>
+          <strong>Administrador</strong>
+          <small>Conta principal</small>
+        </div>
+      </div>
+    </aside>
+
+    
+    <main class="main">
+
+      <header class="topbar">
+        <div>
+          <p class="breadcrumb">Painel / Visão geral</p>
+          <h1>Dashboard</h1>
+        </div>
+
+        <div class="top-actions">
+          <span class="status">● Sistema online</span>
+          <div class="top-avatar">AD</div>
+        </div>
+      </header>
+
+      
+<!-- PÁGINA DE RELATÓRIOS -->
+<section class="pagina-extra" id="paginaRelatorios" hidden>
+
+  <div class="pagina-titulo">
+    <div>
+      <p class="pagina-subtitulo">ANÁLISE DE DADOS</p>
+      <h2>Relatórios</h2>
+      <span>Acompanhe os resultados do seu negócio.</span>
+    </div>
+
+    <button class="botao-preto" id="exportarCSV">
+      ↓ Exportar relatório
+    </button>
+  </div>
+
+  <div class="filtro-relatorio">
+    <label for="periodoRelatorio">Período analisado</label>
+    <select id="periodoRelatorio">
+      <option value="todos">Todo o período</option>
+      <option value="7">Últimos 7 dias</option>
+      <option value="30">Últimos 30 dias</option>
+      <option value="90">Últimos 90 dias</option>
+    </select>
+  </div>
+
+  <div class="relatorio-cards">
+    <div class="relatorio-card">
+      <span>Total de clientes</span>
+      <h2 id="relTotal">0</h2>
+      <p>Cadastros no período</p>
+    </div>
+
+    <div class="relatorio-card">
+      <span>Clientes ativos</span>
+      <h2 id="relAtivos">0</h2>
+      <p>Clientes com status ativo</p>
+    </div>
+
+    <div class="relatorio-card">
+      <span>Clientes inativos</span>
+      <h2 id="relInativos">0</h2>
+      <p>Clientes com status inativo</p>
+    </div>
+
+    <div class="relatorio-card">
+      <span>Taxa de clientes ativos</span>
+      <h2 id="relTaxa">0%</h2>
+      <p>Percentual de clientes ativos</p>
+    </div>
+  </div>
+
+  <div class="relatorio-grid">
+
+    <div class="painel-grafico">
+      <h3>Distribuição de clientes</h3>
+      <p>Proporção de ativos e inativos</p>
+
+      <div class="grafico-rosca-area">
+        <div class="grafico-rosca" id="graficoRosca">
+          <div class="grafico-centro">
+            <strong id="graficoTotal">0</strong>
+            <small>Clientes</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="legenda">
+        <span><i class="ponto-preto"></i> Ativos</span>
+        <span><i class="ponto-cinza"></i> Inativos</span>
+      </div>
+    </div>
+
+    <div class="painel-grafico">
+      <h3>Cadastros por mês</h3>
+      <p>Quantidade de clientes cadastrados</p>
+
+      <div class="grafico-barras" id="graficoBarras"></div>
+    </div>
+
+  </div>
+
+  <div class="painel-resumo">
+    <h3>Resumo do sistema</h3>
+    <p id="textoResumo">
+      Os dados serão exibidos automaticamente.
+    </p>
+  </div>
+
+</section>
+
+<!-- PÁGINA DE CONFIGURAÇÕES -->
+<section class="pagina-extra" id="paginaConfiguracoes" hidden>
+
+  <div class="pagina-titulo">
+    <div>
+      <p class="pagina-subtitulo">PERSONALIZAÇÃO</p>
+      <h2>Configurações</h2>
+      <span>Gerencie as preferências do ClientHub.</span>
+    </div>
+  </div>
+
+  <div class="config-layout">
+
+    <div class="config-card">
+      <div class="config-cabecalho">
+        <div class="config-icone">◉</div>
+        <div>
+          <h3>Informações do perfil</h3>
+          <p>Personalize seu perfil de administrador.</p>
+        </div>
+      </div>
+
+      <form id="formConfiguracoes">
+        <div class="campo-config">
+          <label for="configNome">Nome do administrador</label>
+          <input type="text" id="configNome"
+                 maxlength="80" required
+                 placeholder="Administrador">
+        </div>
+
+        <div class="campo-config">
+          <label for="configEmpresa">Nome da empresa</label>
+          <input type="text" id="configEmpresa"
+                 maxlength="100" required
+                 placeholder="Minha empresa">
+        </div>
+
+        <div class="campo-config">
+          <label for="configEmail">E-mail de contato</label>
+          <input type="email" id="configEmail"
+                 placeholder="contato@empresa.com">
+        </div>
+
+        <button type="submit" class="botao-preto">
+          Salvar alterações
+        </button>
+      </form>
+    </div>
+
+    <div class="config-card">
+      <div class="config-cabecalho">
+        <div class="config-icone">⚙</div>
+        <div>
+          <h3>Preferências do sistema</h3>
+          <p>Configure o comportamento do ClientHub.</p>
+        </div>
+      </div>
+
+      <div class="preferencia">
+        <div>
+          <strong>Confirmação ao excluir</strong>
+          <p>Solicitar confirmação antes de excluir clientes.</p>
+        </div>
+        <input type="checkbox" id="confirmarExclusao" checked>
+      </div>
+
+      <div class="preferencia">
+        <div>
+          <strong>Ordenação alfabética</strong>
+          <p>Exibir clientes por ordem de nome.</p>
+        </div>
+        <input type="checkbox" id="ordenarClientes">
+      </div>
+
+      <div class="config-separador"></div>
+
+      <h3>Gerenciamento de dados</h3>
+      <p class="config-descricao">
+        Remova os registros de clientes armazenados
+        neste navegador.
+      </p>
+
+      <button class="botao-perigo" id="limparClientes">
+        Excluir todos os clientes
+      </button>
+    </div>
+
+  </div>
+
+  <div class="config-card config-sobre">
+    <div>
+      <h3>Sobre o ClientHub</h3>
+      <p>Sistema de gerenciamento de clientes</p>
+    </div>
+    <span>Versão 1.0.0</span>
+  </div>
+
+</section>
+
+      <section class="welcome">
+        <div>
+          <p>PAINEL DE GERENCIAMENTO</p>
+          <h2>Bem-vindo ao ClientHub!</h2>
+          <span>
+            Gerencie seus clientes de maneira simples,
+            rápida e organizada.
+          </span>
+        </div>
+
+        <button class="btn-primary" id="btnNovoCliente">
+          + Novo cliente
+        </button>
+      </section>
+
+      
+      <section class="stats">
+        <div class="stat-card">
+          <div class="stat-top">
+            <span>Total de clientes</span>
+            <div class="stat-icon blue">♙</div>
+          </div>
+          <h2 id="totalClientes">0</h2>
+          <p>Clientes cadastrados</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <span>Clientes ativos</span>
+            <div class="stat-icon green">✓</div>
+          </div>
+          <h2 id="clientesAtivos">0</h2>
+          <p>Cadastros ativos</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <span>Clientes inativos</span>
+            <div class="stat-icon orange">!</div>
+          </div>
+          <h2 id="clientesInativos">0</h2>
+          <p>Cadastros inativos</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <span>Novos neste mês</span>
+            <div class="stat-icon purple">+</div>
+          </div>
+          <h2 id="novosClientes">0</h2>
+          <p>Cadastros do mês atual</p>
+        </div>
+      </section>
+
+     
+      <section class="table-section">
+
+        <div class="table-header">
+          <div>
+            <h2>Clientes cadastrados</h2>
+            <p>Visualize e gerencie seus registros</p>
+          </div>
+
+          <div class="table-actions">
+            <input
+              type="search"
+              id="pesquisa"
+              placeholder="Buscar cliente..."
+              aria-label="Buscar cliente"
+            >
+            <button class="btn-outline" id="btnVerTodos">
+              Ver todos
+            </button>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>CLIENTE</th>
+                <th>TELEFONE</th>
+                <th>DATA DE CADASTRO</th>
+                <th>STATUS</th>
+                <th>AÇÕES</th>
+              </tr>
+            </thead>
+            <tbody id="tabelaClientes"></tbody>
+          </table>
+        </div>
+
+        <div class="table-footer">
+          <span id="contadorTabela">
+            Nenhum cliente cadastrado
+          </span>
+          <span>ClientHub © 2026</span>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+ 
+  <div class="modal-overlay" id="modalCadastro" hidden>
+    <div class="modal" role="dialog"
+         aria-modal="true"
+         aria-labelledby="tituloModal">
+      <div class="modal-header">
+        <h2 id="tituloModal">Novo cliente</h2>
+        <button class="close-modal" id="fecharModal"
+                aria-label="Fechar">×</button>
+      </div>
+
+      <form id="formCliente">
+        <label for="nome">Nome completo</label>
+        <input type="text" id="nome" required
+               maxlength="100" placeholder="Nome do cliente">
+
+        <label for="email">E-mail</label>
+        <input type="email" id="email" required
+               placeholder="cliente@email.com">
+
+        <label for="telefone">Telefone</label>
+        <input type="tel" id="telefone" required
+               maxlength="20" placeholder="(61) 99999-9999">
+
+        <label for="status">Status</label>
+        <select id="status">
+          <option value="Ativo">Ativo</option>
+          <option value="Inativo">Inativo</option>
+        </select>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-outline"
+                  id="cancelarModal">Cancelar</button>
+          <button type="submit" class="btn-primary">
+            Salvar cliente
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
